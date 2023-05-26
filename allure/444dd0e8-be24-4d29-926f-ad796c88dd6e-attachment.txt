@@ -1,0 +1,2 @@
+['seveniruby', 'sevenup', 'SevenRain', 'sevenxxwu', 'seveny', 'seveniruby_wx']
+seveniruby
