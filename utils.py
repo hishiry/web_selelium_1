@@ -4,7 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 def wait_until(driver, posit):
-    WebDriverWait(driver, 20).until(
+    WebDriverWait(driver, 25).until(
         expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, posit)))
 
 
