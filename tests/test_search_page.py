@@ -18,9 +18,11 @@ class TestSearchPo:
         assert 'selenium' in str(self.search.search_category(keyword='selenium')[0]).lower()
 
     def test_search_user(self):
-        assert 'seven' in str(self.search.search_user(keyword='seven')[0]).lower()
+        assert 'seven' in str(self.search.search_user(keyword='seven', )[0]).lower()
+
+    def test_search_matching_title_only(self):
+        self.search.login('2427718792@qq.com', 'hogwarts')
+        assert 'selenium' in str(self.search.search_matching_title_only(keyword='selenium')[0]).lower()
 
     def test_search_poster(self):
-        assert 'selenium' in str(self.search.search_poster(keyword='selenium')[0]).lower()
-
-
+        assert 'seve' in str(self.search.search_poster('', poster='seve')[0]).lower()
