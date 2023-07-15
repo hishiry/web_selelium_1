@@ -1,3 +1,4 @@
+import os
 from time import sleep
 import allure
 from selenium import webdriver
@@ -10,14 +11,28 @@ from utils import wait_until
 class MainPage:
     def __init__(self):
         # self.driver = webdriver.Chrome()
-        self.driver = webdriver.Firefox()
+        # self.driver = webdriver.Firefox()
+
+        browser = os.getenv('browser')
+        if browser == 'chrome':
+            options = webdriver.ChromeOptions()
+        elif browser == 'firefox':
+            options = webdriver.FirefoxOptions()
+        else:
+            options = webdriver.ChromeOptions()
+
+        self.driver = webdriver.Remote('http://192.168.111.137:14444/wd/hub', options=options)
+        self.driver.implicitly_wait(5)
 
     def to_search_advance(self) -> SearchPage:
+        # 打开浏览器
         self.driver.get("https://ceshiren.com/")
-        wait_until(self.driver, '#search-button[title=搜索]')
+        ## remote 不识别中文
+        # wait_until(self.driver, '#search-button[title=搜索]')
+        wait_until(self.driver, '.search-dropdown')
         allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
 
-        self.driver.find_element(By.CSS_SELECTOR, '#search-button[title=搜索]').click()
+        self.driver.find_element(By.CSS_SELECTOR, '.search-dropdown').click()
         wait_until(self.driver, '.show-advanced-search')
         allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
 
