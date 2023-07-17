@@ -1,4 +1,4 @@
-
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from utils import wait_until
@@ -8,11 +8,17 @@ class SearchPage:
     def __init__(self, driver: WebDriver):
         self.driver = driver
 
+    """
+    keyword : 搜索内容
+    content_keyword : 
+    posit : 点击位置 
+    """
     def search(self, keyword, content_keyword, /, posit):
         if len(posit) > 0:
             for i in range(len(posit)-1):
                 self.driver.find_element(By.CSS_SELECTOR, posit[i]).click()
                 wait_until(self.driver, posit[i+1])
+                allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
 
         query = self.driver.find_element(By.CSS_SELECTOR, 'input.search-query')
         # query.clear()
@@ -24,6 +30,7 @@ class SearchPage:
         if content_keyword != '':
             content.send_keys(content_keyword)
             wait_until(self.driver, '#search-posted-by-body .select-kit-collection li:first-child')
+            allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
             self.driver.find_element(By.CSS_SELECTOR,
                                      '#search-posted-by-body .select-kit-collection li:first-child').click()
 
@@ -33,6 +40,7 @@ class SearchPage:
 
     def get_search_result(self, item_posit) -> list[str]:
         wait_until(self.driver, item_posit)
+        allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
         title_list = []
         for element in self.driver.find_elements(By.CSS_SELECTOR, item_posit):
             title_list.append(element.text)
@@ -59,6 +67,7 @@ class SearchPage:
         self.search(keyword, poster, posit)
 
         wait_until(self.driver, '.author')
+        allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
         result_list = []
         for element in self.driver.find_elements(By.XPATH, '//div[@class="search-results"]/div/div/div/div/a'):
             result_list.append(element.get_attribute('href'))
@@ -81,6 +90,7 @@ class SearchPage:
         self.driver.find_element(By.CSS_SELECTOR, '#login-account-password').send_keys(password)
         self.driver.find_element(By.CSS_SELECTOR, '#login-button').click()
         wait_until(self.driver, '#matching-title-only')
+        allure.attach(body=self.driver.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
 
     def close(self):
         self.driver.quit()
