@@ -26,14 +26,6 @@ pipeline {
 //                 git branch: 'main', url: 'https://gitlab.stuq.ceshiren.com/hogwarts/spring-petclinic.git'
                 git branch: 'main', url: 'https://gitlab.com/hishiry/web_selelium_1.git'
             }
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
-                }
-            }
         }
         stage('Tests') {
             parallel {
