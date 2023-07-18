@@ -49,7 +49,8 @@ pipeline {
                 }
                 stage('Test1') {
                     steps {
-                        sh 'python3 -m pytest --alluredir=allure --junitxml=junit.xml web_selelium_1/tests/test_search_page.py'
+                        sh 'ls'
+                        sh 'python3 -m pytest --alluredir=allure --junitxml=junit.xml tests/test_search_page.py'
                     }
                     post {
                         success {
