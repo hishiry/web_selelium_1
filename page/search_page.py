@@ -27,6 +27,8 @@ class SearchPage:
 
         content = self.driver.find_element(By.CSS_SELECTOR, posit[len(posit)-1])
         content.click()
+
+        # 搜索发帖人需要输入内容
         if content_keyword != '':
             content.send_keys(content_keyword)
             wait_until(self.driver, '#search-posted-by-body .select-kit-collection li:first-child')
